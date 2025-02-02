@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  elasticsearch:
+    image: elasticsearch:8.17.1
+    environment:
+      - xpack.security.enabled=false 
+      - discovery.type=single-node
+    ports:
+      - "9200:9200"
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
+
+  kibana:
+    image: kibana:8.17.1
+    ports:
+      - "5601:5601"
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200  
+
+volumes:
+  elasticsearch-data:
